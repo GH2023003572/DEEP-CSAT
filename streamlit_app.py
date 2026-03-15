@@ -1,1 +1,16 @@
-import streamlit as st\nimport pickle\n\n# Load the trained model\nmodel = pickle.load(open('csat_prediction_model.pkl', 'rb'))\n\n# Title and description\nst.title('CSAT Prediction App')\nst.write('This app allows users to input features and get predictions for customer satisfaction scores (CSAT).')\n\n# Input fields for features\nfeature1 = st.number_input('Feature 1')\nfeature2 = st.number_input('Feature 2')\nfeature3 = st.number_input('Feature 3')\n# Add more features as needed\n\n# Button to make prediction\nif st.button('Predict'): \n    features = [[feature1, feature2, feature3]]\n    prediction = model.predict(features)\n    confidence = model.predict_proba(features)\n    st.write(f'Prediction: {prediction[0]}')\n    st.write(f'Confidence Scores: {confidence}')\n
+import streamlit as st
+import pickle
+
+# Load the model
+with open('model.pkl', 'rb') as f:
+    model = pickle.load(f)
+
+# Create input fields for three features
+feature1 = st.number_input('Feature 1')
+feature2 = st.number_input('Feature 2')
+feature3 = st.number_input('Feature 3')
+
+# Create a button for prediction
+if st.button('Predict'):
+    prediction = model.predict([[feature1, feature2, feature3]])
+    st.write('Prediction:', prediction)
